@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:secretkeeper/widgets/animatedLogo.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -14,23 +15,12 @@ class Login extends StatelessWidget {
                   flex: 1,
                   child: Container(
                     height: double.infinity,
+                    padding: EdgeInsets.all(36),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset(
-                              'images/logoBG.png',
-                              height: 240,
-                            ),
-                            Image.asset(
-                              'images/logoFG.png',
-                              height: 200,
-                            ),
-                          ],
-                        ),
+                        AnimatedLogo(),
                         SizedBox(
                           height: constraints.maxHeight * 0.05,
                         ),
