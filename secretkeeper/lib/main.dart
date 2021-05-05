@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:secretkeeper/screens/home.dart';
 import 'package:secretkeeper/screens/login.dart';
 import 'package:secretkeeper/screens/signup.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'SecretKeeper',
       theme: ThemeData(
         primaryColor: Color(0xFF164F55),
-        accentColor: Color(0xFFE5E5E5),
+        accentColor: Colors.black.withOpacity(0.5),
         backgroundColor: Colors.white,
         fontFamily: 'Poppins',
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => Login(),
         '/signup': (BuildContext context) => Signup(),
+        '/home': (BuildContext context) => Home(),
       },
       home: Login(),
     );

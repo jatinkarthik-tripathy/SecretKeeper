@@ -73,10 +73,14 @@ class Login extends StatelessWidget {
                     height: constraints.maxHeight,
                     decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(36),
-                        bottomLeft: Radius.circular(36),
-                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(-3, 0),
+                        )
+                      ],
                     ),
                     padding: EdgeInsets.all(constraints.maxWidth * 0.05),
                     child: Column(
@@ -173,7 +177,8 @@ class Login extends StatelessWidget {
                               Theme.of(context).backgroundColor,
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () =>
+                              Navigator.pushReplacementNamed(context, '/home'),
                           child: Text(
                             "Login",
                             style: TextStyle(
