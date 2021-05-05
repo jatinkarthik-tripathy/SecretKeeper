@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:secretkeeper/widgets/animatedLogo.dart';
 
-class Login extends StatelessWidget {
+class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,7 +25,7 @@ class Login extends StatelessWidget {
                           height: constraints.maxHeight * 0.05,
                         ),
                         Text(
-                          "Hello, Friend!",
+                          "Welcome to SecretKeeper",
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 48,
@@ -36,31 +36,11 @@ class Login extends StatelessWidget {
                           height: constraints.maxHeight * 0.05,
                         ),
                         Text(
-                          "tell me your secrets\nand i shall keep it safe for you",
+                          "Free. Open Source. Cross Platform",
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 36,
                             fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(
-                          height: constraints.maxHeight * 0.1,
-                        ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          onPressed: () => Navigator.pushReplacementNamed(
-                              context, '/signup'),
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              color: Theme.of(context).backgroundColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                            ),
                           ),
                         ),
                       ],
@@ -84,21 +64,10 @@ class Login extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          "SecretKeeper",
-                          style: TextStyle(
-                            color: Theme.of(context).backgroundColor,
-                            fontSize: 48,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(
-                          height: constraints.maxHeight * 0.1,
-                        ),
                         SizedBox(
                           width: constraints.maxWidth * 0.35,
                           child: Text(
-                            "Log in",
+                            "Sign Up",
                             style: TextStyle(
                               color: Theme.of(context).backgroundColor,
                               fontSize: 48,
@@ -151,21 +120,29 @@ class Login extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: constraints.maxHeight * 0.03,
+                          height: constraints.maxHeight * 0.015,
                         ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Forgot your Password ?",
-                            style: TextStyle(
-                              color: Theme.of(context).backgroundColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
+                        TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(36.0),
+                              ),
                             ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: "Confirm Password",
+                            hintStyle: TextStyle(
+                              fontSize: 24,
+                            ),
+                          ),
+                          obscureText: true,
+                          style: TextStyle(
+                            fontSize: 24,
                           ),
                         ),
                         SizedBox(
-                          height: constraints.maxHeight * 0.1,
+                          height: constraints.maxHeight * 0.03,
                         ),
                         ElevatedButton(
                           style: ButtonStyle(
@@ -175,7 +152,7 @@ class Login extends StatelessWidget {
                           ),
                           onPressed: () {},
                           child: Text(
-                            "Login",
+                            "Sign Up",
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 24,
@@ -209,6 +186,40 @@ class Login extends StatelessWidget {
                               ),
                               onPressed: () {},
                             )
+                          ],
+                        ),
+                        SizedBox(
+                          height: constraints.maxHeight * 0.1,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Already have an account ?",
+                              style: TextStyle(
+                                color: Theme.of(context).backgroundColor,
+                                fontSize: 24,
+                              ),
+                            ),
+                            SizedBox(width: 36),
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                  Theme.of(context).backgroundColor,
+                                ),
+                              ),
+                              onPressed: () => Navigator.pushReplacementNamed(
+                                  context, '/login'),
+                              child: Text(
+                                "Log in",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ],

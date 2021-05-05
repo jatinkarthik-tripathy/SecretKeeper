@@ -16,8 +16,14 @@ class _AnimatedLogoState extends State<AnimatedLogo>
     _animController =
         AnimationController(duration: Duration(seconds: 3), vsync: this)
           ..repeat(reverse: true);
-    _animation = Tween(begin: Offset(0, -0.05), end: Offset(0, 0.05))
-        .animate(_animController);
+    _animation = Tween(begin: Offset(0, -0.03), end: Offset(0, 0.03)).animate(
+        CurvedAnimation(parent: _animController, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _animController.dispose();
+    super.dispose();
   }
 
   @override
