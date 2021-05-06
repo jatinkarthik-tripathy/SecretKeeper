@@ -49,7 +49,7 @@ class Login extends StatelessWidget {
                     flex: 1,
                     child: Container(
                       height: double.infinity,
-                      padding: EdgeInsets.all(32),
+                      padding: EdgeInsets.all(24),
                       child: splashMessageSection(context, constraints, 32, 16),
                     ),
                   ),

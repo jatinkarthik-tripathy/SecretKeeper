@@ -42,7 +42,7 @@ class _AnimatedLogoState extends State<AnimatedLogo>
               position: _animation,
               child: Image.asset(
                 'images/logoFG.png',
-                height: Breakpoints().isMobile(constraints) ? 80 : 200,
+                height: Breakpoints().isMobile(constraints) ? 90 : 200,
               ),
             ),
           ],
