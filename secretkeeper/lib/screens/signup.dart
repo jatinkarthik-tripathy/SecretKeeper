@@ -82,7 +82,7 @@ class Signup extends StatelessWidget {
                   child: Container(
                     height: double.infinity,
                     padding: EdgeInsets.all(32),
-                    child: splashMessageSection(context, constraints, 44, 24),
+                    child: splashMessageSection(context, constraints, 44, 20),
                   ),
                 ),
                 Expanded(
@@ -101,7 +101,7 @@ class Signup extends StatelessWidget {
                       ],
                     ),
                     padding: EdgeInsets.all(constraints.maxWidth * 0.025),
-                    child: signupSection(context, constraints, 44, 24),
+                    child: signupSection(context, constraints, 44, 20),
                   ),
                 )
               ],
