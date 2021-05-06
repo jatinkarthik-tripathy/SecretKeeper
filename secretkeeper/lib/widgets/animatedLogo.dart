@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:secretkeeper/models/breakpoints.dart';
 
 class AnimatedLogo extends StatefulWidget {
   @override
@@ -28,21 +29,25 @@ class _AnimatedLogoState extends State<AnimatedLogo>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Image.asset(
-          'images/logoBG.png',
-          height: 240,
-        ),
-        SlideTransition(
-          position: _animation,
-          child: Image.asset(
-            'images/logoFG.png',
-            height: 200,
-          ),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(
+              'images/logoBG.png',
+              height: Breakpoints().isMobile(constraints) ? 120 : 240,
+            ),
+            SlideTransition(
+              position: _animation,
+              child: Image.asset(
+                'images/logoFG.png',
+                height: Breakpoints().isMobile(constraints) ? 80 : 200,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
           style: ButtonStyle(
             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
               EdgeInsets.symmetric(
-                horizontal: 36,
-                vertical: 24,
+                horizontal: 20,
+                vertical: 16,
               ),
             ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
