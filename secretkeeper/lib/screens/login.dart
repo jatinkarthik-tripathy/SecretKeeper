@@ -18,7 +18,7 @@ class Login extends StatelessWidget {
                     child: Container(
                       height: double.infinity,
                       padding: EdgeInsets.all(8),
-                      child: splashMessageSection(context, constraints, 24, 12),
+                      child: splashMessageSection(context, constraints, 24, 16),
                     ),
                   ),
                   Expanded(
@@ -37,7 +37,7 @@ class Login extends StatelessWidget {
                         ],
                       ),
                       padding: EdgeInsets.all(constraints.maxWidth * 0.025),
-                      child: loginSection(context, constraints, 28, 12),
+                      child: loginSection(context, constraints, 28, 16),
                     ),
                   )
                 ],
@@ -119,10 +119,10 @@ class Login extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
-          width: constraints.maxWidth * 0.35,
+        Align(
+          alignment: Alignment.centerLeft,
           child: Text(
-            "Log in",
+            "Log In",
             style: TextStyle(
               color: Theme.of(context).backgroundColor,
               fontSize: headingTextSize,
@@ -234,7 +234,7 @@ class Login extends StatelessWidget {
                   color: Colors.white,
                 ),
                 padding: EdgeInsets.all(8),
-                child: Image.asset('images/gLogo.png'),
+                child: Image.asset('assets/images/gLogo.png'),
               ),
               onPressed: () {},
             ),

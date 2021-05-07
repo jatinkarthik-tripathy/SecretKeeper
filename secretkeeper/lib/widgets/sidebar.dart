@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
 
+// ignore: must_be_immutable
 class SideBar extends StatelessWidget {
   final BoxConstraints constraints;
   final double headingTextSize;
@@ -62,7 +63,7 @@ class SideBar extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: constraints.maxHeight * 0.1,
+            height: constraints.maxHeight * 0.06,
           ),
           Text(
             "All",
@@ -131,22 +132,25 @@ class SideBar extends StatelessWidget {
             height: constraints.maxHeight * 0.3,
           ),
           Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                    Theme.of(context).backgroundColor,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 16),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context).backgroundColor,
+                    ),
                   ),
-                ),
-                onPressed: () =>
-                    Navigator.pushReplacementNamed(context, '/login'),
-                child: Text(
-                  "Log out",
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: plainTextSize,
-                    fontWeight: FontWeight.w600,
+                  onPressed: () =>
+                      Navigator.pushReplacementNamed(context, '/login'),
+                  child: Text(
+                    "Log out",
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: plainTextSize,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
 import 'package:secretkeeper/widgets/sidebar.dart';
 
@@ -44,11 +43,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   Container(
                     height: constraints.maxHeight,
                     padding: EdgeInsets.all(constraints.maxWidth * 0.02),
-                    child: mainSection(context, constraints, 24, 12),
+                    child: mainSection(context, constraints, 24, 16),
                   ),
                   SlideTransition(
                     position: offset,
-                    child: SideBar(constraints, 32, 16, controller),
+                    child: SideBar(constraints, 32, 24, controller),
                   ),
                 ],
               );

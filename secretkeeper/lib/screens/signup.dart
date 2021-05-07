@@ -18,7 +18,7 @@ class Signup extends StatelessWidget {
                     child: Container(
                       height: double.infinity,
                       padding: EdgeInsets.all(8),
-                      child: splashMessageSection(context, constraints, 24, 12),
+                      child: splashMessageSection(context, constraints, 24, 16),
                     ),
                   ),
                   Expanded(
@@ -37,7 +37,7 @@ class Signup extends StatelessWidget {
                         ],
                       ),
                       padding: EdgeInsets.all(constraints.maxWidth * 0.025),
-                      child: signupSection(context, constraints, 28, 12),
+                      child: signupSection(context, constraints, 28, 16),
                     ),
                   )
                 ],
@@ -119,17 +119,14 @@ class Signup extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Padding(
-          padding: EdgeInsets.only(left: 24),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "Sign Up",
-              style: TextStyle(
-                color: Theme.of(context).backgroundColor,
-                fontSize: headingTextSize,
-                fontWeight: FontWeight.w700,
-              ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Sign Up",
+            style: TextStyle(
+              color: Theme.of(context).backgroundColor,
+              fontSize: headingTextSize,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),
@@ -238,17 +235,17 @@ class Signup extends StatelessWidget {
                   width: Breakpoints().isMobile(constraints) ? 8 : 32,
                 ),
                 IconButton(
-                  iconSize: headingTextSize,
+                  iconSize: Breakpoints().isMobile(constraints) ? 40 : 48,
                   icon: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
                     ),
                     padding: EdgeInsets.all(8),
-                    child: Image.asset('images/gLogo.png'),
+                    child: Image.asset('assets/images/gLogo.png'),
                   ),
                   onPressed: () {},
-                )
+                ),
               ],
             ),
           ],

@@ -35,14 +35,14 @@ class _AnimatedLogoState extends State<AnimatedLogo>
           alignment: Alignment.center,
           children: [
             Image.asset(
-              'images/logoBG.png',
+              'assets/images/logoBG.png',
               height: Breakpoints().isMobile(constraints) ? 120 : 240,
             ),
             SlideTransition(
               position: _animation,
               child: Image.asset(
-                'images/logoFG.png',
-                height: Breakpoints().isMobile(constraints) ? 90 : 200,
+                'assets/images/logoFG.png',
+                height: Breakpoints().isMobile(constraints) ? 100 : 200,
               ),
             ),
           ],
