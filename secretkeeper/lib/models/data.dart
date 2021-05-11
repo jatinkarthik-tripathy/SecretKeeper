@@ -48,12 +48,12 @@ class AccountData {
   final String transactionPassword;
   final String notes;
 
-  AccountData({
-    this.type,
-    this.title,
-    this.accountNumber,
-    this.loginPassword,
-    this.transactionPassword,
-    this.notes,
-  });
+  AccountData(
+      {this.type,
+      this.title,
+      this.accountNumber,
+      this.loginPassword,
+      this.transactionPassword,
+      this.notes,
+      b});
 }

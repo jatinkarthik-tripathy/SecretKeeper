@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
+import 'package:secretkeeper/widgets/addDialogBox.dart';
 import 'package:secretkeeper/widgets/sidebar.dart';
 
 class Home extends StatefulWidget {
@@ -171,7 +172,19 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         Theme.of(context).primaryColor,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      return showDialog<void>(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return AddDialogBox(
+                            constraints: constraints,
+                            headingTextSize: headingTextSize,
+                            plainTextSize: plainTextSize,
+                          );
+                        },
+                      );
+                    },
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 16,
@@ -213,7 +226,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     Expanded(
-                      flex: Breakpoints().isMobile(constraints) ? 3 : 5,
+                      flex: Breakpoints().isMobile(constraints) ? 3 : 7,
                       child: Breakpoints().isMobile(constraints)
                           ? Column(
                               mainAxisSize: MainAxisSize.min,
