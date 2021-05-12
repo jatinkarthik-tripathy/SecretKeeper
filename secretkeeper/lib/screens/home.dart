@@ -88,7 +88,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     BuildContext context,
     Object? arguments,
   ) {
-    print(arguments);
     return DialogRoute<void>(
       context: context,
       builder: (BuildContext context) => AddSecret(),
