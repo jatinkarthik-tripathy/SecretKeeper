@@ -4,9 +4,9 @@ class PasswordData {
   final String pwd;
 
   PasswordData({
-    this.type,
-    this.title,
-    this.pwd,
+    required this.type,
+    required this.title,
+    required this.pwd,
   });
 }
 
@@ -16,9 +16,9 @@ class NoteData {
   final String note;
 
   NoteData({
-    this.type,
-    this.title,
-    this.note,
+    required this.type,
+    required this.title,
+    required this.note,
   });
 }
 
@@ -31,12 +31,12 @@ class CardData {
   final String cvv;
 
   CardData({
-    this.type,
-    this.title,
-    this.cardNumber,
-    this.expMonth,
-    this.expYear,
-    this.cvv,
+    required this.type,
+    required this.title,
+    required this.cardNumber,
+    required this.expMonth,
+    required this.expYear,
+    required this.cvv,
   });
 }
 
@@ -48,12 +48,12 @@ class AccountData {
   final String transactionPassword;
   final String notes;
 
-  AccountData(
-      {this.type,
-      this.title,
-      this.accountNumber,
-      this.loginPassword,
-      this.transactionPassword,
-      this.notes,
-      b});
+  AccountData({
+    required this.type,
+    required this.title,
+    required this.accountNumber,
+    required this.loginPassword,
+    required this.transactionPassword,
+    required this.notes,
+  });
 }

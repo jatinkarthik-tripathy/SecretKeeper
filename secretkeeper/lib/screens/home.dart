@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
-import 'package:secretkeeper/widgets/addDialogBox.dart';
+import 'package:secretkeeper/widgets/addSecret.dart';
 import 'package:secretkeeper/widgets/sidebar.dart';
 
 class Home extends StatefulWidget {
@@ -10,21 +11,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool selected = false;
-  AnimationController controller;
-  Animation<Offset> offset;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-
-    offset = Tween<Offset>(
-      begin: Offset(-1.5, 0.0),
-      end: Offset(0, 0.0),
-    ).animate(controller);
-  }
+  late AnimationController controller =
+      AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+  late Animation<Offset> offset = Tween<Offset>(
+    begin: Offset(-1.5, 0.0),
+    end: Offset(0, 0.0),
+  ).animate(controller);
 
   @override
   void dispose() {
@@ -89,6 +81,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           },
         ),
       ),
+    );
+  }
+
+  static Route<Object?> _dialogBuilder(
+    BuildContext context,
+    Object? arguments,
+  ) {
+    print(arguments);
+    return DialogRoute<void>(
+      context: context,
+      builder: (BuildContext context) => AddSecret(),
     );
   }
 
@@ -173,17 +176,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     onPressed: () {
-                      return showDialog<void>(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (BuildContext context) {
-                          return AddDialogBox(
-                            constraints: constraints,
-                            headingTextSize: headingTextSize,
-                            plainTextSize: plainTextSize,
-                          );
-                        },
-                      );
+                      Navigator.of(context).restorablePush(_dialogBuilder);
                     },
                     child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -209,7 +202,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               return Container(
                 width: constraints.maxHeight * 0.05,
                 decoration: BoxDecoration(
-                  color: Color(0xFFE5E5E5),
+                  color: Theme.of(context).accentColor,
                   borderRadius: BorderRadius.circular(36.0),
                 ),
                 margin: EdgeInsets.symmetric(

@@ -8,18 +8,12 @@ class AnimatedLogo extends StatefulWidget {
 
 class _AnimatedLogoState extends State<AnimatedLogo>
     with SingleTickerProviderStateMixin {
-  AnimationController _animController;
-  Animation<Offset> _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _animController =
-        AnimationController(duration: Duration(seconds: 3), vsync: this)
-          ..repeat(reverse: true);
-    _animation = Tween(begin: Offset(0, -0.03), end: Offset(0, 0.03)).animate(
-        CurvedAnimation(parent: _animController, curve: Curves.easeInOut));
-  }
+  late AnimationController _animController =
+      AnimationController(duration: Duration(seconds: 3), vsync: this)
+        ..repeat(reverse: true);
+  late Animation<Offset> _animation =
+      Tween(begin: Offset(0, -0.03), end: Offset(0, 0.03)).animate(
+          CurvedAnimation(parent: _animController, curve: Curves.easeInOut));
 
   @override
   void dispose() {

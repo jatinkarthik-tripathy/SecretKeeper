@@ -7,7 +7,7 @@ class SideBar extends StatelessWidget {
   final double headingTextSize;
   final double plainTextSize;
 
-  AnimationController controller;
+  AnimationController? controller;
   SideBar(this.constraints, this.headingTextSize, this.plainTextSize,
       [this.controller]);
   @override
@@ -56,7 +56,7 @@ class SideBar extends StatelessWidget {
                       icon: Icon(Icons.close,
                           color: Theme.of(context).backgroundColor),
                       onPressed: () {
-                        controller.reverse();
+                        controller?.reverse();
                       },
                     )
                   : SizedBox(width: 0),

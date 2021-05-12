@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'SecretKeeper',
       theme: ThemeData(
         primaryColor: Color(0xFF164F55),
-        accentColor: Colors.black.withOpacity(0.5),
+        accentColor: Color(0xFFE5E5E5),
         backgroundColor: Colors.white,
         fontFamily: 'Poppins',
         elevatedButtonTheme: ElevatedButtonThemeData(
