@@ -10,7 +10,7 @@ class Signup extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         body: LayoutBuilder(
           builder: (context, constraints) {
-            if (Breakpoints().isMobile(constraints)) {
+            if (Breakpoints.isMobile(constraints)) {
               return Column(
                 children: [
                   Expanded(
@@ -29,7 +29,7 @@ class Signup extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.5),
+                            color: Theme.of(context).shadowColor,
                             spreadRadius: 5,
                             blurRadius: 7,
                             offset: Offset(0, -3),
@@ -42,7 +42,7 @@ class Signup extends StatelessWidget {
                   )
                 ],
               );
-            } else if (Breakpoints().isTablet(constraints)) {
+            } else if (Breakpoints.isTablet(constraints)) {
               return Row(
                 children: [
                   Expanded(
@@ -219,7 +219,7 @@ class Signup extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: Breakpoints().isMobile(constraints) ? 8 : 32,
+              width: Breakpoints.isMobile(constraints) ? 8 : 32,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -232,10 +232,10 @@ class Signup extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: Breakpoints().isMobile(constraints) ? 8 : 32,
+                  width: Breakpoints.isMobile(constraints) ? 8 : 32,
                 ),
                 IconButton(
-                  iconSize: Breakpoints().isMobile(constraints) ? 40 : 48,
+                  iconSize: Breakpoints.isMobile(constraints) ? 40 : 48,
                   icon: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,

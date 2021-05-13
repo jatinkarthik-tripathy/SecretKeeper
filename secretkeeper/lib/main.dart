@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xFF164F55),
         accentColor: Color(0xFFE5E5E5),
+        shadowColor: Colors.black.withOpacity(0.5),
         backgroundColor: Colors.white,
         fontFamily: 'Poppins',
         elevatedButtonTheme: ElevatedButtonThemeData(

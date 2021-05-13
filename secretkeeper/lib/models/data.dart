@@ -57,3 +57,5 @@ class AccountData {
     required this.notes,
   });
 }
+
+List<PasswordData> pwdDatalist = [];

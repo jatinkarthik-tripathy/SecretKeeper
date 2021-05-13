@@ -30,7 +30,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       child: Scaffold(
         body: LayoutBuilder(
           builder: (context, constraints) {
-            if (Breakpoints().isMobile(constraints)) {
+            if (Breakpoints.isMobile(constraints)) {
               return Stack(
                 children: [
                   Container(
@@ -44,7 +44,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ),
                 ],
               );
-            } else if (Breakpoints().isTablet(constraints)) {
+            } else if (Breakpoints.isTablet(constraints)) {
               return Row(
                 children: [
                   Expanded(
@@ -90,7 +90,31 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   ) {
     return DialogRoute<void>(
       context: context,
-      builder: (BuildContext context) => AddSecret(),
+      builder: (BuildContext context) => LayoutBuilder(
+        builder: (context, constraints) => SimpleDialog(
+          title: Text(
+            "Add a Secret",
+            style: TextStyle(
+              fontSize: 32,
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          backgroundColor: Theme.of(context).backgroundColor,
+          children: [
+            Container(
+              width: Breakpoints.isTablet(constraints)
+                  ? constraints.maxWidth * 0.75
+                  : constraints.maxWidth * 0.5,
+              height: constraints.maxHeight * 0.6,
+              padding: EdgeInsets.symmetric(
+                horizontal: constraints.maxWidth * 0.01,
+              ),
+              child: AddSecret(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -103,7 +127,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Breakpoints().isMobile(constraints)
+            Breakpoints.isMobile(constraints)
                 ? IconButton(
                     iconSize: 24,
                     icon:
@@ -118,7 +142,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: Breakpoints().isMobile(constraints) ? 8 : 32,
+                    horizontal: Breakpoints.isMobile(constraints) ? 8 : 32,
                     vertical: 16),
                 child: TextField(
                   decoration: InputDecoration(
@@ -157,7 +181,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ),
               ),
             ),
-            Breakpoints().isMobile(constraints)
+            Breakpoints.isMobile(constraints)
                 ? CircleAvatar(
                     backgroundColor: Theme.of(context).primaryColor,
                     radius: 24,
@@ -165,7 +189,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       iconSize: 24,
                       icon: Icon(Icons.add,
                           color: Theme.of(context).backgroundColor),
-                      onPressed: () {},
+                      onPressed: () => showModalBottomSheet<void>(
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        isScrollControlled: true,
+                        isDismissible: true,
+                        builder: (context) => Container(
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight * 0.8,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: constraints.maxWidth * 0.01,
+                          ),
+                          color: Theme.of(context).backgroundColor,
+                          child: AddSecret(),
+                        ),
+                      ),
                     ),
                   )
                 : ElevatedButton(
@@ -174,9 +212,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         Theme.of(context).primaryColor,
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).restorablePush(_dialogBuilder);
-                    },
+                    onPressed: () =>
+                        Navigator.of(context).restorablePush(_dialogBuilder),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 16,
@@ -218,8 +255,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     Expanded(
-                      flex: Breakpoints().isMobile(constraints) ? 3 : 7,
-                      child: Breakpoints().isMobile(constraints)
+                      flex: Breakpoints.isMobile(constraints) ? 3 : 7,
+                      child: Breakpoints.isMobile(constraints)
                           ? Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,

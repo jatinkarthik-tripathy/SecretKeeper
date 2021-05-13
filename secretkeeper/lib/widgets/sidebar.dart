@@ -19,7 +19,7 @@ class SideBar extends StatelessWidget {
         color: Theme.of(context).primaryColor,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).shadowColor,
             spreadRadius: 5,
             blurRadius: 7,
             offset: Offset(3, 0),
@@ -34,7 +34,7 @@ class SideBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: Breakpoints().isMobile(constraints)
+                width: Breakpoints.isMobile(constraints)
                     ? constraints.maxWidth * 0.5
                     : constraints.maxWidth * 0.2,
                 child: FittedBox(
@@ -50,7 +50,7 @@ class SideBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Breakpoints().isMobile(constraints)
+              Breakpoints.isMobile(constraints)
                   ? IconButton(
                       iconSize: 28,
                       icon: Icon(Icons.close,
