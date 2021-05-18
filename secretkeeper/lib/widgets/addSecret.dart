@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
+import 'package:secretkeeper/widgets/cardContainer.dart';
+import 'package:secretkeeper/widgets/noteContainer.dart';
+import 'package:secretkeeper/widgets/passwordContainer.dart';
 
 enum types { password, notes, cards, account }
 
@@ -11,6 +14,7 @@ class AddSecret extends StatefulWidget {
 
 class _AddSecretState extends State<AddSecret> {
   types selectedType = types.password;
+  TextEditingController titleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -95,9 +99,98 @@ class _AddSecretState extends State<AddSecret> {
             ),
             Expanded(
               child: TabBarView(children: [
-                passwordContainer(constraints, plainTextSize, headingTextSize),
-                noteContainer(constraints, plainTextSize, headingTextSize),
-                cardContainer(constraints, plainTextSize, headingTextSize),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor,
+                      width: 4,
+                    ),
+                  ),
+                  padding: EdgeInsets.all(constraints.maxWidth * 0.01),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: PasswordContainer(
+                          titleController: titleController,
+                        ),
+                      ),
+                      Divider(
+                        thickness: 4,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: encrypt(
+                          constraints,
+                          plainTextSize,
+                          headingTextSize,
+                          titleController,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor,
+                      width: 4,
+                    ),
+                  ),
+                  padding: EdgeInsets.all(constraints.maxWidth * 0.01),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: NoteContainer(),
+                      ),
+                      Divider(
+                        thickness: 4,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: encrypt(
+                          constraints,
+                          plainTextSize,
+                          headingTextSize,
+                          titleController,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).primaryColor,
+                      width: 4,
+                    ),
+                  ),
+                  padding: EdgeInsets.all(constraints.maxWidth * 0.01),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: CardContainer(),
+                      ),
+                      Divider(
+                        thickness: 4,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: encrypt(
+                          constraints,
+                          plainTextSize,
+                          headingTextSize,
+                          titleController,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 // accountContainer(constraints, plainTextSize, headingTextSize),
               ]),
             )
@@ -107,675 +200,90 @@ class _AddSecretState extends State<AddSecret> {
     });
   }
 
-  Widget passwordContainer(
+  Widget encrypt(
     BoxConstraints constraints,
     double plainTextSize,
     double headingTextSize,
+    TextEditingController titleController,
   ) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 4,
-        ),
-      ),
-      padding: EdgeInsets.all(constraints.maxWidth * 0.01),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Text(
-                  "Title",
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: plainTextSize,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: Breakpoints.isMobile(constraints) ? 2 : 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: "Title",
-                    hintStyle: TextStyle(
-                      fontSize: plainTextSize,
-                    ),
-                  ),
-                  enableSuggestions: true,
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Text(
-                  "Username",
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: plainTextSize,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: Breakpoints.isMobile(constraints) ? 2 : 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: "Username",
-                    hintStyle: TextStyle(
-                      fontSize: plainTextSize,
-                    ),
-                  ),
-                  enableSuggestions: true,
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Text(
-                  "Password",
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: plainTextSize,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: Breakpoints.isMobile(constraints) ? 2 : 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: "Password",
-                    hintStyle: TextStyle(
-                      fontSize: plainTextSize,
-                    ),
-                  ),
-                  enableSuggestions: true,
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Divider(
-            thickness: 4,
-            color: Theme.of(context).primaryColor,
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Text(
-                  "Master Key",
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: plainTextSize,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: Breakpoints.isMobile(constraints) ? 2 : 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: "Master Key",
-                    hintStyle: TextStyle(
-                      fontSize: plainTextSize,
-                    ),
-                  ),
-                  enableSuggestions: true,
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              SizedBox(
-                width: 32,
-              ),
-              TextButton(
-                child: Text(
-                  'Add Entry',
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget noteContainer(
-    BoxConstraints constraints,
-    double plainTextSize,
-    double headingTextSize,
-  ) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 4,
-        ),
-      ),
-      padding: EdgeInsets.all(constraints.maxWidth * 0.01),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Text(
-                  "Title",
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: plainTextSize,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: "Title",
-                    hintStyle: TextStyle(
-                      fontSize: plainTextSize,
-                    ),
-                  ),
-                  enableSuggestions: true,
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Text(
-                  "Note",
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: plainTextSize,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: "Note",
-                    hintStyle: TextStyle(
-                      fontSize: plainTextSize,
-                    ),
-                  ),
-                  enableSuggestions: true,
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                  ),
-                  maxLines: 5,
-                ),
-              ),
-            ],
-          ),
-          Divider(
-            thickness: 4,
-            color: Theme.of(context).primaryColor,
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Text(
-                  "Master Key",
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: plainTextSize,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: Breakpoints.isMobile(constraints) ? 2 : 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: "Master Key",
-                    hintStyle: TextStyle(
-                      fontSize: plainTextSize,
-                    ),
-                  ),
-                  enableSuggestions: true,
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              SizedBox(
-                width: 32,
-              ),
-              TextButton(
-                child: Text(
-                  'Add Entry',
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget cardContainer(
-    BoxConstraints constraints,
-    double plainTextSize,
-    double headingTextSize,
-  ) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 4,
-        ),
-      ),
-      padding: EdgeInsets.all(Breakpoints.isMobile(constraints)
-          ? constraints.maxWidth * 0.01
-          : constraints.maxWidth * 0.03),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Card(
-              elevation: 20,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(36)),
-              shadowColor: Theme.of(context).primaryColor,
-              child: Container(
-                padding:
-                    EdgeInsets.all(Breakpoints.isMobile(constraints) ? 8 : 32),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: Breakpoints.isMobile(constraints) ? 3 : 9,
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(32.0),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: "Card Number",
-                              hintStyle: TextStyle(
-                                fontSize: plainTextSize,
-                              ),
-                            ),
-                            enableSuggestions: true,
-                            style: TextStyle(
-                              fontSize: plainTextSize,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: Breakpoints.isMobile(constraints) ? 8 : 32,
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(32.0),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: "CVV",
-                              hintStyle: TextStyle(
-                                fontSize: plainTextSize,
-                              ),
-                            ),
-                            enableSuggestions: true,
-                            style: TextStyle(
-                              fontSize: plainTextSize,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            "Validity ",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: plainTextSize,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(32.0),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: "MM",
-                              hintStyle: TextStyle(
-                                fontSize: plainTextSize,
-                                letterSpacing: 2.0,
-                              ),
-                            ),
-                            enableSuggestions: true,
-                            style: TextStyle(
-                              fontSize: plainTextSize,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 32,
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(32.0),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: "YY",
-                              hintStyle: TextStyle(
-                                fontSize: plainTextSize,
-                                letterSpacing: 2.0,
-                              ),
-                            ),
-                            enableSuggestions: true,
-                            style: TextStyle(
-                              fontSize: plainTextSize,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Text(
-                            "Name",
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: plainTextSize,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: Breakpoints.isMobile(constraints) ? 2 : 4,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(32.0),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              hintText: "Name",
-                              hintStyle: TextStyle(
-                                fontSize: plainTextSize,
-                              ),
-                            ),
-                            enableSuggestions: true,
-                            style: TextStyle(
-                              fontSize: plainTextSize,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Divider(
-                  thickness: 4,
+    print(titleController.text);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              flex: 1,
+              child: Text(
+                "Master Key",
+                style: TextStyle(
                   color: Theme.of(context).primaryColor,
+                  fontSize: plainTextSize,
+                  fontWeight: FontWeight.w700,
                 ),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Text(
-                        "Master Key",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: plainTextSize,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: Breakpoints.isMobile(constraints) ? 2 : 4,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(32.0),
-                            ),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: "Master Key",
-                          hintStyle: TextStyle(
-                            fontSize: plainTextSize,
-                          ),
-                        ),
-                        enableSuggestions: true,
-                        style: TextStyle(
-                          fontSize: plainTextSize,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(
-                          fontSize: plainTextSize,
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    SizedBox(
-                      width: 32,
-                    ),
-                    TextButton(
-                      child: Text(
-                        'Add Entry',
-                        style: TextStyle(
-                          fontSize: plainTextSize,
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                )
-              ],
+              ),
             ),
-          )
-        ],
-      ),
+            Expanded(
+              flex: Breakpoints.isMobile(constraints) ? 2 : 4,
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(32.0),
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: "Master Key",
+                  hintStyle: TextStyle(
+                    fontSize: plainTextSize,
+                  ),
+                ),
+                enableSuggestions: true,
+                style: TextStyle(
+                  fontSize: plainTextSize,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButton(
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  fontSize: plainTextSize,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            SizedBox(
+              width: 32,
+            ),
+            TextButton(
+              child: Text(
+                "Encrypt",
+                style: TextStyle(
+                  fontSize: plainTextSize,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              onPressed: () {
+                print(titleController.text);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        )
+      ],
     );
   }
 

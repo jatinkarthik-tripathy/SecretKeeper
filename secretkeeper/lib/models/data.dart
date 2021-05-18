@@ -1,11 +1,13 @@
 class PasswordData {
   final int type;
   final String title;
+  final String username;
   final String pwd;
 
   PasswordData({
     required this.type,
     required this.title,
+    required this.username,
     required this.pwd,
   });
 }
@@ -58,4 +60,12 @@ class AccountData {
   });
 }
 
-List<PasswordData> pwdDatalist = [];
+Stream<List<PasswordData>> pwdDatalist =
+    Stream<List<PasswordData>>.fromIterable(
+  <List<PasswordData>>[
+    List<PasswordData>.generate(
+        10,
+        (int i) => PasswordData(
+            type: 0, title: i.toString(), username: "username", pwd: "pwd")),
+  ],
+);

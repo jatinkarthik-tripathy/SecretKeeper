@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
+import 'package:secretkeeper/models/data.dart';
 import 'package:secretkeeper/widgets/addSecret.dart';
 import 'package:secretkeeper/widgets/sidebar.dart';
 
@@ -232,103 +233,118 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ],
         ),
         Expanded(
-          child: ListView.builder(
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Container(
-                width: constraints.maxHeight * 0.05,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).accentColor,
-                  borderRadius: BorderRadius.circular(36.0),
-                ),
-                margin: EdgeInsets.symmetric(
-                    horizontal: constraints.maxWidth * 0.05, vertical: 16),
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Icon(
-                        Icons.security_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    Expanded(
-                      flex: Breakpoints.isMobile(constraints) ? 3 : 7,
-                      child: Breakpoints.isMobile(constraints)
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Title",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: plainTextSize,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  "username",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: plainTextSize,
-                                  ),
-                                ),
-                              ],
-                            )
-                          : Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    "Title",
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: plainTextSize,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    "username",
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: plainTextSize,
-                                    ),
-                                  ),
-                                ),
-                              ],
+          child: StreamBuilder<List<PasswordData>>(
+              stream: pwdDatalist,
+              builder: (context, snapshot) {
+                return ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    if (snapshot.hasData) {
+                      return Container(
+                        width: constraints.maxHeight * 0.05,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).accentColor,
+                          borderRadius: BorderRadius.circular(36.0),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: constraints.maxWidth * 0.05,
+                            vertical: 16),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Icon(
+                                Icons.security_outlined,
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            Theme.of(context).primaryColor,
-                          ),
+                            Expanded(
+                              flex: Breakpoints.isMobile(constraints) ? 3 : 7,
+                              child: Breakpoints.isMobile(constraints)
+                                  ? Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          snapshot.data![index].title,
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: plainTextSize,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        Text(
+                                          "username",
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: plainTextSize,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            snapshot.data![index].title,
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: plainTextSize,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: Text(
+                                            "username",
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: plainTextSize,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                    Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                onPressed: () {},
+                                child: Text(
+                                  "Show",
+                                  style: TextStyle(
+                                    color: Theme.of(context).backgroundColor,
+                                    fontSize: plainTextSize,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        onPressed: () {},
-                        child: Text(
-                          "Show",
-                          style: TextStyle(
-                            color: Theme.of(context).backgroundColor,
-                            fontSize: plainTextSize,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            itemCount: 25,
-          ),
+                      );
+                    }
+                    return CircularProgressIndicator();
+                  },
+                  itemCount: snapshot.data?.length,
+                );
+              }),
         )
       ],
     );
