@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
 import 'package:secretkeeper/models/data.dart';
 import 'package:secretkeeper/widgets/addSecret.dart';
+import 'package:secretkeeper/widgets/showSecret.dart';
 import 'package:secretkeeper/widgets/sidebar.dart';
 
 class Home extends StatefulWidget {
@@ -85,7 +86,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  static Route<Object?> _dialogBuilder(
+  static Route<Object?> _addDialogBuilder(
     BuildContext context,
     Object? arguments,
   ) {
@@ -112,6 +113,40 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 horizontal: constraints.maxWidth * 0.01,
               ),
               child: AddSecret(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Route<Object?> _showDialogBuilder(
+    BuildContext context,
+    Object? arguments,
+  ) {
+    return DialogRoute<void>(
+      context: context,
+      builder: (BuildContext context) => LayoutBuilder(
+        builder: (context, constraints) => SimpleDialog(
+          title: Text(
+            "Your Secret",
+            style: TextStyle(
+              fontSize: 32,
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          backgroundColor: Theme.of(context).backgroundColor,
+          children: [
+            Container(
+              width: Breakpoints.isTablet(constraints)
+                  ? constraints.maxWidth * 0.75
+                  : constraints.maxWidth * 0.5,
+              height: constraints.maxHeight * 0.6,
+              padding: EdgeInsets.symmetric(
+                horizontal: constraints.maxWidth * 0.01,
+              ),
+              child: ShowSecret(),
             ),
           ],
         ),
@@ -214,7 +249,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     onPressed: () =>
-                        Navigator.of(context).restorablePush(_dialogBuilder),
+                        Navigator.of(context).restorablePush(_addDialogBuilder),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 16,
@@ -325,7 +360,28 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                     Theme.of(context).primaryColor,
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Breakpoints.isMobile(constraints)
+                                      ? showModalBottomSheet<void>(
+                                          context: context,
+                                          backgroundColor: Colors.transparent,
+                                          isScrollControlled: true,
+                                          isDismissible: true,
+                                          builder: (context) => Container(
+                                            width: constraints.maxWidth,
+                                            height: constraints.maxHeight * 0.8,
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  constraints.maxWidth * 0.01,
+                                            ),
+                                            color: Theme.of(context)
+                                                .backgroundColor,
+                                            child: ShowSecret(),
+                                          ),
+                                        )
+                                      : Navigator.of(context)
+                                          .restorablePush(_showDialogBuilder);
+                                },
                                 child: Text(
                                   "Show",
                                   style: TextStyle(

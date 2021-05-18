@@ -124,7 +124,6 @@ class _AddSecretState extends State<AddSecret> {
                         child: encrypt(
                           constraints,
                           plainTextSize,
-                          headingTextSize,
                           titleController,
                         ),
                       )
@@ -154,7 +153,6 @@ class _AddSecretState extends State<AddSecret> {
                         child: encrypt(
                           constraints,
                           plainTextSize,
-                          headingTextSize,
                           titleController,
                         ),
                       )
@@ -184,7 +182,6 @@ class _AddSecretState extends State<AddSecret> {
                         child: encrypt(
                           constraints,
                           plainTextSize,
-                          headingTextSize,
                           titleController,
                         ),
                       )
@@ -203,7 +200,6 @@ class _AddSecretState extends State<AddSecret> {
   Widget encrypt(
     BoxConstraints constraints,
     double plainTextSize,
-    double headingTextSize,
     TextEditingController titleController,
   ) {
     print(titleController.text);

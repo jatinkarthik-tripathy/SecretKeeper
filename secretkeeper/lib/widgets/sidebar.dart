@@ -109,17 +109,17 @@ class SideBar extends StatelessWidget {
           SizedBox(
             height: constraints.maxHeight * 0.025,
           ),
-          Text(
-            "Bank Accounts",
-            style: TextStyle(
-              color: Theme.of(context).backgroundColor,
-              fontSize: plainTextSize,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(
-            height: constraints.maxHeight * 0.025,
-          ),
+          // Text(
+          //   "Bank Accounts",
+          //   style: TextStyle(
+          //     color: Theme.of(context).backgroundColor,
+          //     fontSize: plainTextSize,
+          //     fontWeight: FontWeight.w600,
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: constraints.maxHeight * 0.025,
+          // ),
           Text(
             "Account Settings",
             style: TextStyle(
