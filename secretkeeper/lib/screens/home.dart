@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
 import 'package:secretkeeper/models/data.dart';
-import 'package:secretkeeper/widgets/addSecret.dart';
+import 'package:secretkeeper/widgets/appBar.dart';
+import 'package:secretkeeper/widgets/pwdList.dart';
 import 'package:secretkeeper/widgets/showSecret.dart';
 import 'package:secretkeeper/widgets/sidebar.dart';
 
@@ -86,322 +87,49 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  static Route<Object?> _addDialogBuilder(
-    BuildContext context,
-    Object? arguments,
-  ) {
-    return DialogRoute<void>(
-      context: context,
-      builder: (BuildContext context) => LayoutBuilder(
-        builder: (context, constraints) => SimpleDialog(
-          title: Text(
-            "Add a Secret",
-            style: TextStyle(
-              fontSize: 32,
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          backgroundColor: Theme.of(context).backgroundColor,
-          children: [
-            Container(
-              width: Breakpoints.isTablet(constraints)
-                  ? constraints.maxWidth * 0.75
-                  : constraints.maxWidth * 0.5,
-              height: constraints.maxHeight * 0.6,
-              padding: EdgeInsets.symmetric(
-                horizontal: constraints.maxWidth * 0.01,
-              ),
-              child: AddSecret(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  static Route<Object?> _showDialogBuilder(
-    BuildContext context,
-    Object? arguments,
-  ) {
-    return DialogRoute<void>(
-      context: context,
-      builder: (BuildContext context) => LayoutBuilder(
-        builder: (context, constraints) => SimpleDialog(
-          title: Text(
-            "Your Secret",
-            style: TextStyle(
-              fontSize: 32,
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          backgroundColor: Theme.of(context).backgroundColor,
-          children: [
-            Container(
-              width: Breakpoints.isTablet(constraints)
-                  ? constraints.maxWidth * 0.75
-                  : constraints.maxWidth * 0.5,
-              height: constraints.maxHeight * 0.6,
-              padding: EdgeInsets.symmetric(
-                horizontal: constraints.maxWidth * 0.01,
-              ),
-              child: ShowSecret(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget mainSection(BuildContext context, BoxConstraints constraints,
       double headingTextSize, double plainTextSize) {
-    return Column(
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Breakpoints.isMobile(constraints)
-                ? IconButton(
-                    iconSize: 24,
-                    icon:
-                        Icon(Icons.menu, color: Theme.of(context).primaryColor),
-                    onPressed: () {
-                      controller.forward();
-                    },
-                  )
-                : SizedBox(
-                    width: 0,
-                  ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Breakpoints.isMobile(constraints) ? 8 : 32,
-                    vertical: 16),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(36.0),
-                      ),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).primaryColor,
-                        width: 1,
-                      ),
-                    ),
-                    filled: false,
-                    hintText: "Search",
-                    hintStyle: TextStyle(
-                      fontSize: plainTextSize,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    suffixIcon: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 0,
-                      ),
-                      child: Icon(
-                        Icons.search,
-                        color: Theme.of(context).primaryColor,
-                        size: 24,
-                      ),
-                    ),
-                  ),
-                  enableSuggestions: true,
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-            ),
-            Breakpoints.isMobile(constraints)
-                ? CircleAvatar(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    radius: 24,
-                    child: IconButton(
-                      iconSize: 24,
-                      icon: Icon(Icons.add,
-                          color: Theme.of(context).backgroundColor),
-                      onPressed: () => showModalBottomSheet<void>(
-                        context: context,
-                        backgroundColor: Colors.transparent,
-                        isScrollControlled: true,
-                        isDismissible: true,
-                        builder: (context) => Container(
-                          width: constraints.maxWidth,
-                          height: constraints.maxHeight * 0.8,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: constraints.maxWidth * 0.01,
-                          ),
-                          color: Theme.of(context).backgroundColor,
-                          child: AddSecret(),
-                        ),
-                      ),
-                    ),
-                  )
-                : ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    onPressed: () =>
-                        Navigator.of(context).restorablePush(_addDialogBuilder),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 0,
-                      ),
-                      child: Text(
-                        "Add",
-                        style: TextStyle(
-                          color: Theme.of(context).backgroundColor,
-                          fontSize: plainTextSize,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-          ],
+    return CustomScrollView(
+      slivers: [
+        SliverFixedExtentList(
+          delegate: SliverChildListDelegate([
+            CustomAppBar(controller: controller),
+          ]),
+          itemExtent: constraints.maxHeight * 0.1,
         ),
-        Expanded(
-          child: StreamBuilder<List<PasswordData>>(
-              stream: pwdDatalist,
-              builder: (context, snapshot) {
-                return ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    if (snapshot.hasData) {
-                      return Container(
-                        width: constraints.maxHeight * 0.05,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).accentColor,
-                          borderRadius: BorderRadius.circular(36.0),
-                        ),
-                        margin: EdgeInsets.symmetric(
-                            horizontal: constraints.maxWidth * 0.05,
-                            vertical: 16),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Icon(
-                                Icons.security_outlined,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            Expanded(
-                              flex: Breakpoints.isMobile(constraints) ? 3 : 7,
-                              child: Breakpoints.isMobile(constraints)
-                                  ? Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          snapshot.data![index].title,
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: plainTextSize,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        Text(
-                                          "username",
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: plainTextSize,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 2,
-                                          child: Text(
-                                            snapshot.data![index].title,
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: plainTextSize,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Text(
-                                            "username",
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: plainTextSize,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                    Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Breakpoints.isMobile(constraints)
-                                      ? showModalBottomSheet<void>(
-                                          context: context,
-                                          backgroundColor: Colors.transparent,
-                                          isScrollControlled: true,
-                                          isDismissible: true,
-                                          builder: (context) => Container(
-                                            width: constraints.maxWidth,
-                                            height: constraints.maxHeight * 0.8,
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal:
-                                                  constraints.maxWidth * 0.01,
-                                            ),
-                                            color: Theme.of(context)
-                                                .backgroundColor,
-                                            child: ShowSecret(),
-                                          ),
-                                        )
-                                      : Navigator.of(context)
-                                          .restorablePush(_showDialogBuilder);
-                                },
-                                child: Text(
-                                  "Show",
-                                  style: TextStyle(
-                                    color: Theme.of(context).backgroundColor,
-                                    fontSize: plainTextSize,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    return CircularProgressIndicator();
-                  },
-                  itemCount: snapshot.data?.length,
-                );
-              }),
-        )
+        SliverFixedExtentList(
+          delegate: SliverChildListDelegate(
+            [
+              Expanded(
+                child: Container(
+                  color: Colors.red,
+                ),
+              )
+            ],
+          ),
+          itemExtent: constraints.maxHeight * 0.3,
+        ),
+        StreamBuilder<List<PasswordData>>(
+          stream: pwdDatalist,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return pwdList(constraints, context, plainTextSize, snapshot);
+            }
+            return SliverToBoxAdapter(child: CircularProgressIndicator());
+          },
+        ),
+        // SliverList(
+        //   delegate: SliverChildBuilderDelegate((context)),
+        // ),
+        SliverFixedExtentList(
+          delegate: SliverChildListDelegate([
+            Expanded(
+                child: Container(
+              color: Colors.blue,
+            ))
+          ]),
+          itemExtent: constraints.maxHeight * 0.7,
+        ),
       ],
     );
   }
