@@ -4,7 +4,6 @@ import 'package:secretkeeper/models/breakpoints.dart';
 import 'package:secretkeeper/models/data.dart';
 import 'package:secretkeeper/widgets/appBar.dart';
 import 'package:secretkeeper/widgets/pwdList.dart';
-import 'package:secretkeeper/widgets/showSecret.dart';
 import 'package:secretkeeper/widgets/sidebar.dart';
 
 class Home extends StatefulWidget {
@@ -98,6 +97,26 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           itemExtent: constraints.maxHeight * 0.1,
         ),
         SliverFixedExtentList(
+          itemExtent: constraints.maxHeight * 0.03,
+          delegate: SliverChildListDelegate(
+            [
+              Container(
+                width: constraints.maxWidth,
+                color: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                child: Text(
+                  "Cards",
+                  style: TextStyle(
+                    fontSize: plainTextSize,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SliverFixedExtentList(
           delegate: SliverChildListDelegate(
             [
               Expanded(
@@ -107,7 +126,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               )
             ],
           ),
-          itemExtent: constraints.maxHeight * 0.3,
+          itemExtent: constraints.maxHeight * 0.25,
+        ),
+        SliverFixedExtentList(
+          itemExtent: constraints.maxHeight * 0.03,
+          delegate: SliverChildListDelegate(
+            [
+              Container(
+                width: constraints.maxWidth,
+                color: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                child: Text(
+                  "Passwords",
+                  style: TextStyle(
+                    fontSize: plainTextSize,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ],
+          ),
         ),
         StreamBuilder<List<PasswordData>>(
           stream: pwdDatalist,
@@ -121,6 +160,26 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         // SliverList(
         //   delegate: SliverChildBuilderDelegate((context)),
         // ),
+        SliverFixedExtentList(
+          itemExtent: constraints.maxHeight * 0.03,
+          delegate: SliverChildListDelegate(
+            [
+              Container(
+                width: constraints.maxWidth,
+                color: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                child: Text(
+                  "Notes",
+                  style: TextStyle(
+                    fontSize: plainTextSize,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ],
+          ),
+        ),
         SliverFixedExtentList(
           delegate: SliverChildListDelegate([
             Expanded(
