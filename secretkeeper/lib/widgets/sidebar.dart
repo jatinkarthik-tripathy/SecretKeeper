@@ -65,45 +65,73 @@ class SideBar extends StatelessWidget {
           SizedBox(
             height: constraints.maxHeight * 0.06,
           ),
-          Text(
-            "All",
-            style: TextStyle(
-              color: Theme.of(context).backgroundColor,
-              fontSize: plainTextSize,
-              fontWeight: FontWeight.w600,
+          InkWell(
+            onTap: () => Navigator.pushReplacementNamed(
+              context,
+              '/home',
+              arguments: "all",
+            ),
+            child: Text(
+              "All",
+              style: TextStyle(
+                color: Theme.of(context).backgroundColor,
+                fontSize: plainTextSize,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           SizedBox(
             height: constraints.maxHeight * 0.025,
           ),
-          Text(
-            "Passwords",
-            style: TextStyle(
-              color: Theme.of(context).backgroundColor,
-              fontSize: plainTextSize,
-              fontWeight: FontWeight.w600,
+          InkWell(
+            onTap: () => Navigator.pushReplacementNamed(
+              context,
+              '/home',
+              arguments: "pwds",
+            ),
+            child: Text(
+              "Passwords",
+              style: TextStyle(
+                color: Theme.of(context).backgroundColor,
+                fontSize: plainTextSize,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           SizedBox(
             height: constraints.maxHeight * 0.025,
           ),
-          Text(
-            "Notes",
-            style: TextStyle(
-              color: Theme.of(context).backgroundColor,
-              fontSize: plainTextSize,
-              fontWeight: FontWeight.w600,
+          InkWell(
+            onTap: () => Navigator.pushReplacementNamed(
+              context,
+              '/home',
+              arguments: "notes",
+            ),
+            child: Text(
+              "Notes",
+              style: TextStyle(
+                color: Theme.of(context).backgroundColor,
+                fontSize: plainTextSize,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           SizedBox(
             height: constraints.maxHeight * 0.025,
           ),
-          Text(
-            "Cards",
-            style: TextStyle(
-              color: Theme.of(context).backgroundColor,
-              fontSize: plainTextSize,
-              fontWeight: FontWeight.w600,
+          InkWell(
+            onTap: () => Navigator.pushReplacementNamed(
+              context,
+              '/home',
+              arguments: "cards",
+            ),
+            child: Text(
+              "Cards",
+              style: TextStyle(
+                color: Theme.of(context).backgroundColor,
+                fontSize: plainTextSize,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
           SizedBox(

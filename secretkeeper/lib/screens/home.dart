@@ -28,6 +28,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    print(ModalRoute.of(context)?.settings.arguments);
+    String? toDisplay = ModalRoute.of(context)?.settings.arguments as String?;
+
     return SafeArea(
       child: Scaffold(
         body: LayoutBuilder(
@@ -38,7 +41,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   Container(
                     height: constraints.maxHeight,
                     padding: EdgeInsets.all(constraints.maxWidth * 0.02),
-                    child: mainSection(context, constraints, 24, 16),
+                    child: mainSection(
+                        context, constraints, 24, 16, toDisplay ?? "all"),
                   ),
                   SlideTransition(
                     position: offset,
@@ -58,7 +62,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     child: Container(
                       height: constraints.maxHeight,
                       padding: EdgeInsets.all(constraints.maxWidth * 0.02),
-                      child: mainSection(context, constraints, 32, 16),
+                      child: mainSection(
+                          context, constraints, 32, 16, toDisplay ?? "all"),
                     ),
                   ),
                 ],
@@ -75,7 +80,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   child: Container(
                     height: constraints.maxHeight,
                     padding: EdgeInsets.all(constraints.maxWidth * 0.02),
-                    child: mainSection(context, constraints, 36, 20),
+                    child: mainSection(
+                        context, constraints, 36, 20, toDisplay ?? "all"),
                   ),
                 ),
               ],
@@ -86,8 +92,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget mainSection(BuildContext context, BoxConstraints constraints,
-      double headingTextSize, double plainTextSize) {
+  Widget mainSection(
+    BuildContext context,
+    BoxConstraints constraints,
+    double headingTextSize,
+    double plainTextSize,
+    String toDisplay,
+    // bool pwds,
+    // bool notes,
+  ) {
     return CustomScrollView(
       slivers: [
         SliverFixedExtentList(
@@ -96,99 +109,139 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ]),
           itemExtent: constraints.maxHeight * 0.1,
         ),
-        SliverFixedExtentList(
-          itemExtent: constraints.maxHeight * 0.03,
-          delegate: SliverChildListDelegate(
-            [
-              Container(
-                width: constraints.maxWidth,
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                child: Text(
-                  "Cards",
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SliverFixedExtentList(
-          delegate: SliverChildListDelegate(
-            [
-              Expanded(
-                child: Container(
-                  color: Colors.red,
+        (toDisplay.compareTo("all") == 0 || toDisplay.compareTo("cards") == 0)
+            ? SliverFixedExtentList(
+                itemExtent: constraints.maxHeight * 0.03,
+                delegate: SliverChildListDelegate(
+                  [
+                    Container(
+                      width: constraints.maxWidth,
+                      color: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                      child: Text(
+                        "Cards",
+                        style: TextStyle(
+                          fontSize: plainTextSize,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ],
                 ),
               )
-            ],
-          ),
-          itemExtent: constraints.maxHeight * 0.25,
-        ),
-        SliverFixedExtentList(
-          itemExtent: constraints.maxHeight * 0.03,
-          delegate: SliverChildListDelegate(
-            [
-              Container(
-                width: constraints.maxWidth,
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                child: Text(
-                  "Passwords",
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  textAlign: TextAlign.start,
+            : SliverFixedExtentList(
+                itemExtent: 0,
+                delegate: SliverChildListDelegate(
+                  [],
                 ),
               ),
-            ],
-          ),
-        ),
-        StreamBuilder<List<PasswordData>>(
-          stream: pwdDatalist,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return pwdList(constraints, context, plainTextSize, snapshot);
-            }
-            return SliverToBoxAdapter(child: CircularProgressIndicator());
-          },
-        ),
-        // SliverList(
-        //   delegate: SliverChildBuilderDelegate((context)),
-        // ),
-        SliverFixedExtentList(
-          itemExtent: constraints.maxHeight * 0.03,
-          delegate: SliverChildListDelegate(
-            [
-              Container(
-                width: constraints.maxWidth,
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                child: Text(
-                  "Notes",
-                  style: TextStyle(
-                    fontSize: plainTextSize,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  textAlign: TextAlign.start,
+        (toDisplay.compareTo("all") == 0 || toDisplay.compareTo("cards") == 0)
+            ? SliverFixedExtentList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Container(
+                      color: Colors.red,
+                    )
+                  ],
+                ),
+                itemExtent: constraints.maxHeight * 0.25,
+              )
+            : SliverFixedExtentList(
+                itemExtent: 0,
+                delegate: SliverChildListDelegate(
+                  [],
                 ),
               ),
-            ],
-          ),
-        ),
-        SliverFixedExtentList(
-          delegate: SliverChildListDelegate([
-            Expanded(
-                child: Container(
-              color: Colors.blue,
-            ))
-          ]),
-          itemExtent: constraints.maxHeight * 0.7,
-        ),
+        (toDisplay.compareTo("all") == 0 || toDisplay.compareTo("pwds") == 0)
+            ? SliverFixedExtentList(
+                itemExtent: constraints.maxHeight * 0.03,
+                delegate: SliverChildListDelegate(
+                  [
+                    Container(
+                      width: constraints.maxWidth,
+                      color: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                      child: Text(
+                        "Passwords",
+                        style: TextStyle(
+                          fontSize: plainTextSize,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : SliverFixedExtentList(
+                itemExtent: 0,
+                delegate: SliverChildListDelegate(
+                  [],
+                ),
+              ),
+        (toDisplay.compareTo("all") == 0 || toDisplay.compareTo("pwds") == 0)
+            ? StreamBuilder<List<PasswordData>>(
+                stream: pwdDatalist,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return pwdList(
+                        constraints, context, plainTextSize, snapshot);
+                  }
+                  return SliverToBoxAdapter(child: CircularProgressIndicator());
+                },
+              )
+            : SliverFixedExtentList(
+                itemExtent: 0,
+                delegate: SliverChildListDelegate(
+                  [],
+                ),
+              ),
+        (toDisplay.compareTo("all") == 0 || toDisplay.compareTo("notes") == 0)
+            ? SliverFixedExtentList(
+                itemExtent: constraints.maxHeight * 0.03,
+                delegate: SliverChildListDelegate(
+                  [
+                    Container(
+                      width: constraints.maxWidth,
+                      color: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+                      child: Text(
+                        "Notes",
+                        style: TextStyle(
+                          fontSize: plainTextSize,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : SliverFixedExtentList(
+                itemExtent: 0,
+                delegate: SliverChildListDelegate(
+                  [],
+                ),
+              ),
+        (toDisplay.compareTo("all") == 0 || toDisplay.compareTo("notes") == 0)
+            ? SliverFixedExtentList(
+                delegate: SliverChildListDelegate([
+                  Container(
+                    color: Colors.blue,
+                  )
+                ]),
+                itemExtent: constraints.maxHeight * 0.7,
+              )
+            : SliverFixedExtentList(
+                itemExtent: 0,
+                delegate: SliverChildListDelegate(
+                  [],
+                ),
+              ),
       ],
     );
   }

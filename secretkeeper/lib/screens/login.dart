@@ -203,7 +203,11 @@ class Login extends StatelessWidget {
                   Theme.of(context).backgroundColor,
                 ),
               ),
-              onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
+              onPressed: () => Navigator.pushReplacementNamed(
+                context,
+                '/home',
+                arguments: "all",
+              ),
               child: Text(
                 "Login",
                 style: TextStyle(
