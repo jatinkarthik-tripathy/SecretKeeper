@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
-import 'package:secretkeeper/widgets/cardContainer.dart';
-import 'package:secretkeeper/widgets/noteContainer.dart';
-import 'package:secretkeeper/widgets/passwordContainer.dart';
+import 'package:secretkeeper/widgets/addSecret/cardContainer.dart';
+import 'package:secretkeeper/widgets/addSecret/noteContainer.dart';
+import 'package:secretkeeper/widgets/addSecret/passwordContainer.dart';
 
 enum types { password, notes, cards, account }
 
@@ -202,7 +202,6 @@ class _AddSecretState extends State<AddSecret> {
     double plainTextSize,
     TextEditingController titleController,
   ) {
-    print(titleController.text);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -273,7 +272,6 @@ class _AddSecretState extends State<AddSecret> {
                 ),
               ),
               onPressed: () {
-                print(titleController.text);
                 Navigator.of(context).pop();
               },
             ),

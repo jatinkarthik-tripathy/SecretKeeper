@@ -69,3 +69,10 @@ Stream<List<PasswordData>> pwdDatalist =
             type: 0, title: i.toString(), username: "username", pwd: "pwd")),
   ],
 );
+
+Stream<List<NoteData>> noteDatalist = Stream<List<NoteData>>.fromIterable(
+  <List<NoteData>>[
+    List<NoteData>.generate(
+        10, (int i) => NoteData(type: 1, title: "note $i", note: "test")),
+  ],
+);

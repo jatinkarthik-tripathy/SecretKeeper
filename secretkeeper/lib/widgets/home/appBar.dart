@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
-import 'package:secretkeeper/widgets/addSecret.dart';
+import 'package:secretkeeper/widgets/addSecret/addSecret.dart';
 
 class CustomAppBar extends StatelessWidget {
   final AnimationController controller;

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:secretkeeper/models/breakpoints.dart';
 import 'package:secretkeeper/models/data.dart';
-import 'package:secretkeeper/widgets/appBar.dart';
-import 'package:secretkeeper/widgets/pwdList.dart';
-import 'package:secretkeeper/widgets/sidebar.dart';
+import 'package:secretkeeper/widgets/home/appBar.dart';
+import 'package:secretkeeper/widgets/home/noteList.dart';
+import 'package:secretkeeper/widgets/home/pwdList.dart';
+import 'package:secretkeeper/widgets/home/sidebar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -28,7 +29,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print(ModalRoute.of(context)?.settings.arguments);
     String? toDisplay = ModalRoute.of(context)?.settings.arguments as String?;
 
     return SafeArea(
@@ -228,13 +228,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ),
               ),
         (toDisplay.compareTo("all") == 0 || toDisplay.compareTo("notes") == 0)
-            ? SliverFixedExtentList(
-                delegate: SliverChildListDelegate([
-                  Container(
-                    color: Colors.blue,
-                  )
-                ]),
-                itemExtent: constraints.maxHeight * 0.7,
+            ? StreamBuilder<List<NoteData>>(
+                stream: noteDatalist,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return noteList(
+                        constraints, context, plainTextSize, snapshot);
+                  }
+                  return SliverToBoxAdapter(child: CircularProgressIndicator());
+                },
               )
             : SliverFixedExtentList(
                 itemExtent: 0,
